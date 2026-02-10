@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.example'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    // Use commit hash for latest YouTube fixes
+    implementation 'com.github.teamnewpipe:NewPipeExtractor:251f7f6'
+    // fallback if needed:
+    // implementation 'com.github.teamnewpipe:NewPipeExtractor:0.24.4'
+}
+
+application {
+    mainClass = 'DownloaderApp'
+}
+
+/*
+ Disable distribution archives to avoid duplicate JAR issues
+ (you don't need distTar / distZip anyway)
+*/
+tasks.named("distTar") {
+    enabled = false
+}
+
+tasks.named("distZip") {
+    enabled = false
+}
+
+/*
+ Avoid duplicate dependency copy errors
+*/
+tasks.withType(Copy).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

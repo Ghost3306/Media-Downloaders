@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.TeamNewPipe:NewPipeExtractor:v0.25.1'
+}
+
+application {
+    mainClass = 'Main'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+/*
+  🔥 FAT JAR WITHOUT SHADOW
+  This bundles ALL runtime dependencies into one JAR
+*/
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+/* Disable tests completely (Windows file-lock issues) */
+tasks.withType(Test).configureEach {
+    enabled = false
+}

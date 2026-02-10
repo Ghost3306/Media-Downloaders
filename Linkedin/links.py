@@ -32,9 +32,7 @@ url = f"https://www.linkedin.com/search/results/content/?keywords={encoded}"
 driver.get(url)
 time.sleep(6)
 
-# ==============================
-# SCRAPE POSTS (URN BASED)
-# ==============================
+
 post_links = set()
 
 for scroll in range(SCROLL_COUNT):
@@ -53,12 +51,10 @@ for scroll in range(SCROLL_COUNT):
 
 driver.quit()
 
-# ==============================
-# SAVE OUTPUT
-# ==============================
+
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     for link in sorted(post_links):
         f.write(link + "\n")
 
-print(f"\n✅ Extracted {len(post_links)} REAL post links")
-print(f"📁 Saved to {OUTPUT_FILE}")
+print(f"\nExtracted {len(post_links)} REAL post links")
+print(f"Saved to {OUTPUT_FILE}")

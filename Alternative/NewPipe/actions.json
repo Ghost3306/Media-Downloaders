@@ -1,0 +1,11 @@
+[
+    {
+        "type": "click",
+        "xpath": "//a"
+    },
+    {
+        "type": "input",
+        "xpath": "//input",
+        "value": "hello firefox"
+    }
+]
